@@ -55,7 +55,7 @@ gcc rsft_harmonic.c -lshtns -lfftw3 -lm -o rsft_harmonic
 * Harmonic multiplexing in fiber/radio/optical domains
 
 ## 📜 License
-
+🛡️ Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
 
 ## 🧭 Next Steps
 
