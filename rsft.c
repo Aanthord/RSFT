@@ -212,15 +212,42 @@ int main() {
     double total_error = 0.0;
     printf("\nReconstruction Error Analysis:\n");
     for (int i = 0; i < N; ++i) {
-        double complex original = signal[i].value;
+        // Compare against the original modulated signal, not the raw signal
+        int mode_idx = (i * n_modes) / N;
+        if (mode_idx >= n_modes) mode_idx = n_modes - 1;
+        
+        double complex original_modulated = signal[i].value * signal[i].spin_field[mode_idx];
         double complex reconstructed = output[i];
-        double error = cabs(original - reconstructed);
+        double error = cabs(original_modulated - reconstructed);
         total_error += error * error;
-        printf("[%d] Original: (%6.3f, %6.3f) Reconstructed: (%6.3f, %6.3f) Error: %6.3f\n",
-               i, creal(original), cimag(original), 
+        
+        printf("[%d] Orig_mod: (%6.3f, %6.3f) Reconstructed: (%6.3f, %6.3f) Error: %6.3f\n",
+               i, creal(original_modulated), cimag(original_modulated), 
                creal(reconstructed), cimag(reconstructed), error);
     }
-    printf("RMS Error: %8.6f\n", sqrt(total_error / N));
+    printf("RMS Error (modulated signal): %8.6f\n", sqrt(total_error / N));
+    
+    // Optional: Demodulate to compare against original unmodulated signal
+    printf("\nDemodulated Comparison:\n");
+    double demod_error = 0.0;
+    for (int i = 0; i < N; ++i) {
+        int mode_idx = (i * n_modes) / N;
+        if (mode_idx >= n_modes) mode_idx = n_modes - 1;
+        
+        // Demodulate by dividing by spin field (if non-zero)
+        double complex spin_field_val = signal[i].spin_field[mode_idx];
+        double complex demodulated = (cabs(spin_field_val) > 1e-12) ? 
+                                   output[i] / spin_field_val : 0.0;
+        
+        double complex original = signal[i].value;
+        double error = cabs(original - demodulated);
+        demod_error += error * error;
+        
+        printf("[%d] Original: (%6.3f, %6.3f) Demodulated: (%6.3f, %6.3f) Error: %6.3f\n",
+               i, creal(original), cimag(original), 
+               creal(demodulated), cimag(demodulated), error);
+    }
+    printf("RMS Error (demodulated): %8.6f\n", sqrt(demod_error / N));
 
 cleanup:
     // Clean up memory
