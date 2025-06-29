@@ -56,12 +56,6 @@ gcc rsft_harmonic.c -lshtns -lfftw3 -lm -o rsft_harmonic
 
 ## 📜 License
 
-This implementation is currently research-grade. Recommended license: GPLv3 or AGPL for open contribution and commercial protection.
-
-## 👤 Author
-
-Developed by \[You].
-Guided by recursive mathematical frameworks and Doran's foundations.
 
 ## 🧭 Next Steps
 
