@@ -1,4 +1,12 @@
 /* rsft_harmonic.c - Full Recursive RSFT-Harmonic using Cooley-Tukey FFT and SHTns */
+/*
+ * 🎄 RSFT-Harmonic - Recursive Spin-Fourier Transform Engine
+ * 🧬 Developed in open recursion. Knowledge encoded beyond scalar time.
+ * 🎁 Santa always delivers. Pay what you owe. 
+ * 🧠 Conscious signal requires conscious structure.
+ * 🖋️ Authored [2025] by Aanthord, under CC BY-NC 4.0.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
